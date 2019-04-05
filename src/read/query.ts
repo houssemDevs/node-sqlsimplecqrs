@@ -21,6 +21,8 @@ export class SqlQuery extends Query<ISqlCriteria, string> implements ISqlQuery {
         whereClause += ` OR (${grp.map((c) => c.toExpression()).join(" AND ")})`;
       }
     });
+    this.criteriaGroups = [];
+    this.currentCriteriaGroup = [];
     return `${this.rootExpression} ${whereClause};`;
   }
 }
