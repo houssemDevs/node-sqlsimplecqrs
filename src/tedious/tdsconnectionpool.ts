@@ -1,10 +1,5 @@
 import { createPool, Factory, Pool } from "generic-pool";
-import {
-  Connection,
-  ConnectionConfig,
-  ConnectionError,
-  Request,
-} from "tedious";
+import { Connection, ConnectionConfig, ConnectionError, Request } from "tedious";
 import { IConnectionPool, IPoolTask } from "../common/connectionpool";
 
 // tslint:disable-next-line: interface-name
@@ -19,9 +14,7 @@ export interface TdsConnectionConfig extends ConnectionConfig {
   };
 }
 
-const TdsConnectionPoolFactory = (
-  config: TdsConnectionConfig,
-): Factory<Connection> => ({
+const TdsConnectionPoolFactory = (config: TdsConnectionConfig): Factory<Connection> => ({
   create: () => {
     return new Promise((res, rej) => {
       const cnn = new Connection(config);
@@ -34,18 +27,18 @@ const TdsConnectionPoolFactory = (
       });
     });
   },
-  destroy: async (client) => {
-    return client.close();
+  destroy: (client) => {
+    return new Promise((res) => res(client.close()));
   },
-  validate: async (client) => {
+  validate: (client) => {
     return new Promise((res) => {
       const req = new Request("SELECT GETDATE();", (err) => {
         if (err) {
           res(false);
+        } else {
+          res(true);
         }
       });
-      req.once("done", () => res(true));
-      req.once("error", (err) => res(false));
       client.execSql(req);
     });
   },
@@ -62,15 +55,13 @@ export class TdsConnectionPool implements IConnectionPool<Connection> {
     });
   }
   public use(task: IPoolTask<Connection>): void {
-    this.acquire().then((c) => {
-      task(c).then(() => this.release(c));
-    });
+    this.pool.use(task);
   }
   public terminate(): void {
     this.pool.drain();
   }
-  public acquire(): PromiseLike<Connection> {
-    return this.pool.acquire();
+  public acquire(): Promise<Connection> {
+    return new Promise((res) => this.pool.acquire().then((c) => res(c)));
   }
   public release(c: Connection): void {
     this.pool.release(c);

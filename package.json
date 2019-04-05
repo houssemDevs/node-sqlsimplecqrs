@@ -1,6 +1,6 @@
 {
   "name": "node-sqlsimplecqrs",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "node-simplecqrs implementation for sql",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -9,7 +9,8 @@
     "build": "npx webpack",
     "dev": "npx webpack --config webpack.dev.js --watch",
     "preversion": "npm run build",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "prepublish": "npm run build"
   },
   "files": [
     "lib/**/*"
