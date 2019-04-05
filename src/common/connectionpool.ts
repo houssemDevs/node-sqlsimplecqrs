@@ -1,7 +1,7 @@
-export type IPoolTask<TConnection> = (c: TConnection) => PromiseLike<void>;
+export type IPoolTask<TConnection> = (c: TConnection) => Promise<void>;
 
 export interface IConnectionPool<TConnection> {
-  acquire(): PromiseLike<TConnection>;
+  acquire(): Promise<TConnection>;
   release(c: TConnection): void;
   destroy(c: TConnection): void;
   terminate(): void;
