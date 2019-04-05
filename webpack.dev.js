@@ -1,6 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
+const tsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = () => ({
   target: 'node',
@@ -33,6 +34,10 @@ module.exports = () => ({
   externals: [nodeExternals()],
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
+    plugins: [new tsconfigPathsPlugin()],
   },
   plugins: [new cleanWebpackPlugin()],
 });

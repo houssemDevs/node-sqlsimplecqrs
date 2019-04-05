@@ -1,7 +1,7 @@
 {
-  "name": "bp",
+  "name": "node-sqlsimplecqrs",
   "version": "0.0.2",
-  "description": "nodejs package using typescript",
+  "description": "node-simplecqrs implementation for sql",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -14,7 +14,20 @@
   "files": [
     "lib/**/*"
   ],
-  "keywords": [],
+  "keywords": [
+    "cqrs",
+    "node",
+    "sql",
+    "tds",
+    "tedious",
+    "pg",
+    "command",
+    "query"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/houssemdevs/node-sqlsimplecqrs"
+  },
   "author": "GHIAT Houssem",
   "license": "MIT",
   "devDependencies": {
@@ -27,6 +40,7 @@
     "jest": "^24.7.1",
     "ts-jest": "^24.0.1",
     "ts-loader": "^5.3.3",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
     "tslint": "^5.15.0",
     "typescript": "^3.4.1",
     "webpack": "^4.29.6",
@@ -36,6 +50,7 @@
   "dependencies": {
     "generic-pool": "^3.7.1",
     "node-simplecqrs": "^0.1.0",
+    "stronger-typed-streams": "^0.1.2",
     "tedious": "^6.1.0"
   }
 }

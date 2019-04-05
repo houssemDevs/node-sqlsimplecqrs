@@ -28,6 +28,9 @@ module.exports = () => ({
   externals: [nodeExternals()],
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   plugins: [new cleanWebpackPlugin()],
 });
