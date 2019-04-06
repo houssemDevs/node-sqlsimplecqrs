@@ -1,3 +1,3 @@
-import { ISqlQuery, SqlQuery } from "../read/query";
+import { SqlQuery } from "../read/query";
 
 export class TdsQuery extends SqlQuery {}
