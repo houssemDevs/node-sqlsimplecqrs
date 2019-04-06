@@ -5,7 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest --coverage",
     "build": "npx webpack",
     "dev": "npx webpack --config webpack.dev.js --watch",
     "preversion": "npm run build",
