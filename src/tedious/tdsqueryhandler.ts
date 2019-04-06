@@ -10,7 +10,10 @@ import { EntityReadableStream } from "./utils";
 export class TdsQueryHandler<TEntity> implements ISqlQueryHandler<TEntity> {
   protected connectionPool: TdsConnectionPool;
   protected dataMapper: ITdsDataMapper<TEntity>;
-  constructor(connectionPool: TdsConnectionPool, dataMapper: ITdsDataMapper<TEntity>) {
+  constructor(
+    connectionPool: TdsConnectionPool,
+    dataMapper: ITdsDataMapper<TEntity>,
+  ) {
     this.connectionPool = connectionPool;
     this.dataMapper = dataMapper;
   }
@@ -29,6 +32,7 @@ export class TdsQueryHandler<TEntity> implements ISqlQueryHandler<TEntity> {
               }
             });
             req.on("row", (row) => matches.push(this.dataMapper.toDomain(row)));
+            req.on("error", (err) => r(res([])));
             conn.execSql(req);
           }),
       );
@@ -44,6 +48,7 @@ export class TdsQueryHandler<TEntity> implements ISqlQueryHandler<TEntity> {
             res();
           });
           req.on("row", (row) => rs.push(this.dataMapper.toDomain(row)));
+          req.on("error", () => {});
           conn.execSql(req);
         }),
     );
