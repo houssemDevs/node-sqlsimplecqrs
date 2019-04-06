@@ -1,5 +1,10 @@
 import { createPool, Factory, Pool } from "generic-pool";
-import { Connection, ConnectionConfig, ConnectionError, Request } from "tedious";
+import {
+  Connection,
+  ConnectionConfig,
+  ConnectionError,
+  Request,
+} from "tedious";
 import { IConnectionPool, IPoolTask } from "../common/connectionpool";
 
 // tslint:disable-next-line: interface-name
@@ -14,7 +19,9 @@ export interface TdsConnectionConfig extends ConnectionConfig {
   };
 }
 
-const TdsConnectionPoolFactory = (config: TdsConnectionConfig): Factory<Connection> => ({
+const TdsConnectionPoolFactory = (
+  config: TdsConnectionConfig,
+): Factory<Connection> => ({
   create: () => {
     return new Promise((res, rej) => {
       const cnn = new Connection(config);
@@ -25,6 +32,7 @@ const TdsConnectionPoolFactory = (config: TdsConnectionConfig): Factory<Connecti
           res(cnn);
         }
       });
+      cnn.once("error", (err) => rej(err));
     });
   },
   destroy: (client) => {
@@ -39,6 +47,7 @@ const TdsConnectionPoolFactory = (config: TdsConnectionConfig): Factory<Connecti
           res(true);
         }
       });
+      req.once("error", () => res(false));
       client.execSql(req);
     });
   },
@@ -48,7 +57,7 @@ export class TdsConnectionPool implements IConnectionPool<Connection> {
   private pool: Pool<Connection>;
   constructor(config: TdsConnectionConfig) {
     this.pool = createPool<Connection>(TdsConnectionPoolFactory(config), {
-      acquireTimeoutMillis: 3000,
+      acquireTimeoutMillis: 6000,
       idleTimeoutMillis: 10000,
       min: 4,
       max: 16,
