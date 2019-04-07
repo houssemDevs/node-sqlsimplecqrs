@@ -1,4 +1,4 @@
-import { createPool, Factory, Pool } from "generic-pool";
+import { createPool, Factory, Options, Pool } from "generic-pool";
 import {
   Connection,
   ConnectionConfig,
@@ -55,12 +55,13 @@ const TdsConnectionPoolFactory = (
 
 export class TdsConnectionPool implements IConnectionPool<Connection> {
   private pool: Pool<Connection>;
-  constructor(config: TdsConnectionConfig) {
+  constructor(config: TdsConnectionConfig, opts?: Options) {
     this.pool = createPool<Connection>(TdsConnectionPoolFactory(config), {
       acquireTimeoutMillis: 6000,
       idleTimeoutMillis: 10000,
       min: 4,
       max: 16,
+      ...opts,
     });
   }
   public use(task: IPoolTask<Connection>): void {
@@ -70,7 +71,13 @@ export class TdsConnectionPool implements IConnectionPool<Connection> {
     this.pool.drain();
   }
   public acquire(): Promise<Connection> {
-    return new Promise((res) => this.pool.acquire().then((c) => res(c)));
+    return new Promise((res, rej) => {
+      try {
+        this.pool.acquire().then((c) => res(c));
+      } catch (err) {
+        rej(err);
+      }
+    });
   }
   public release(c: Connection): void {
     this.pool.release(c);
