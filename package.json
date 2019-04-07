@@ -1,6 +1,6 @@
 {
   "name": "node-sqlsimplecqrs",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "node-simplecqrs implementation for sql",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
