@@ -10,7 +10,7 @@
     "dev": "npx webpack --config webpack.dev.js --watch",
     "preversion": "npm run build && npm test",
     "postversion": "git push && git push --tags",
-    "prepare": "npm run build"
+    "prepare": "npm run build && npm test"
   },
   "files": [
     "lib/**/*"
