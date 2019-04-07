@@ -24,7 +24,6 @@ export class TdsQueryHandler<TEntity> implements ISqlQueryHandler<TEntity> {
         (conn) =>
           new Promise((r) => {
             const req = new Request(query.toExpression(), (err) => {
-              this.connectionPool.release(conn);
               if (err) {
                 r(res([]));
               } else {
