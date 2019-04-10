@@ -1,9 +1,9 @@
-import { TdsCriteria } from "../src/tedious";
+import { TdsFilterCriteria } from "../src/tedious";
 
-describe("TdsCriteria", () => {
+describe("TdsFilterCriteria", () => {
   test("Date equality criteria", () => {
     const d = new Date();
-    const c = TdsCriteria.dateEq("date", d);
+    const c = TdsFilterCriteria.dateEq("date", d);
     expect(c.toExpression()).toMatch(
       `date = DATEFROMPARTS(${d.getFullYear()},${d.getMonth() +
         1},${d.getDate()})`,
@@ -11,7 +11,7 @@ describe("TdsCriteria", () => {
   });
   test("Date less than criteria", () => {
     const d = new Date();
-    const c = TdsCriteria.dateLt("date", d);
+    const c = TdsFilterCriteria.dateLt("date", d);
     expect(c.toExpression()).toMatch(
       `date < DATEFROMPARTS(${d.getFullYear()},${d.getMonth() +
         1},${d.getDate()})`,
@@ -19,7 +19,7 @@ describe("TdsCriteria", () => {
   });
   test("Date less than or equal criteria", () => {
     const d = new Date();
-    const c = TdsCriteria.dateLte("date", d);
+    const c = TdsFilterCriteria.dateLte("date", d);
     expect(c.toExpression()).toMatch(
       `date <= DATEFROMPARTS(${d.getFullYear()},${d.getMonth() +
         1},${d.getDate()})`,
@@ -27,7 +27,7 @@ describe("TdsCriteria", () => {
   });
   test("Date greater than criteria", () => {
     const d = new Date();
-    const c = TdsCriteria.dateGt("date", d);
+    const c = TdsFilterCriteria.dateGt("date", d);
     expect(c.toExpression()).toMatch(
       `date > DATEFROMPARTS(${d.getFullYear()},${d.getMonth() +
         1},${d.getDate()})`,
@@ -35,7 +35,7 @@ describe("TdsCriteria", () => {
   });
   test("Date greater than or equal criteria", () => {
     const d = new Date();
-    const c = TdsCriteria.dateGte("date", d);
+    const c = TdsFilterCriteria.dateGte("date", d);
     expect(c.toExpression()).toMatch(
       `date >= DATEFROMPARTS(${d.getFullYear()},${d.getMonth() +
         1},${d.getDate()})`,
