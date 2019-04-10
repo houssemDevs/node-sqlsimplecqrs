@@ -5,7 +5,7 @@ import {
   ConnectionError,
   Request,
 } from "tedious";
-import { IConnectionPool, IPoolTask } from "../common/connectionpool";
+import { IConnectionPool, IPoolTask } from "../../common/connectionpool";
 
 // tslint:disable-next-line: interface-name
 export interface TdsConnectionConfig extends ConnectionConfig {

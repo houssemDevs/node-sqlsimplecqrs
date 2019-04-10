@@ -1,5 +1,8 @@
-export { TdsConnectionConfig, TdsConnectionPool } from "./tdsconnectionpool";
-export { TdsCriteria } from "./tdscriteria";
-export { ITdsDataMapper, TdsDataMapper } from "./tdsdatamapper";
-export { TdsQuery } from "./tdsquery";
-export { TdsQueryHandler } from "./tdsqueryhandler";
+export {
+  TdsConnectionConfig,
+  TdsConnectionPool,
+} from "./common/tdsconnectionpool";
+export { TdsFilterCriteria } from "./read/tdscriteria";
+export { ITdsDataMapper, TdsDataMapper } from "./common/tdsdatamapper";
+export { TdsSelectQuery } from "./read/tdsquery";
+export { TdsQueryHandler } from "./read/tdsqueryhandler";

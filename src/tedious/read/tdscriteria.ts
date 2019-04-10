@@ -1,7 +1,7 @@
-import { ISqlCriteria, SqlCriteria } from "../read/criteria";
+import { ISqlFilterCriteria, SqlFilterCriteria } from "../../sql/read/criteria";
 
-export class TdsCriteria extends SqlCriteria {
-  public static dateEq(filedName: string, value: Date): ISqlCriteria {
+export class TdsFilterCriteria extends SqlFilterCriteria {
+  public static dateEq(filedName: string, value: Date): ISqlFilterCriteria {
     return this.custom(
       filedName,
       `DATEFROMPARTS(${value.getFullYear()},${value.getMonth() +
@@ -9,7 +9,7 @@ export class TdsCriteria extends SqlCriteria {
       "=",
     );
   }
-  public static dateLt(filedName: string, value: Date): ISqlCriteria {
+  public static dateLt(filedName: string, value: Date): ISqlFilterCriteria {
     return this.custom(
       filedName,
       `DATEFROMPARTS(${value.getFullYear()},${value.getMonth() +
@@ -17,7 +17,7 @@ export class TdsCriteria extends SqlCriteria {
       "<",
     );
   }
-  public static dateLte(filedName: string, value: Date): ISqlCriteria {
+  public static dateLte(filedName: string, value: Date): ISqlFilterCriteria {
     return this.custom(
       filedName,
       `DATEFROMPARTS(${value.getFullYear()},${value.getMonth() +
@@ -25,7 +25,7 @@ export class TdsCriteria extends SqlCriteria {
       "<=",
     );
   }
-  public static dateGt(filedName: string, value: Date): ISqlCriteria {
+  public static dateGt(filedName: string, value: Date): ISqlFilterCriteria {
     return this.custom(
       filedName,
       `DATEFROMPARTS(${value.getFullYear()},${value.getMonth() +
@@ -33,7 +33,7 @@ export class TdsCriteria extends SqlCriteria {
       ">",
     );
   }
-  public static dateGte(filedName: string, value: Date): ISqlCriteria {
+  public static dateGte(filedName: string, value: Date): ISqlFilterCriteria {
     return this.custom(
       filedName,
       `DATEFROMPARTS(${value.getFullYear()},${value.getMonth() +

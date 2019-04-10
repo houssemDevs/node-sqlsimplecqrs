@@ -1,6 +1,6 @@
 import { ColumnValue } from "tedious";
 
-import { ISqlDataMapper } from "../common/datamapper";
+import { ISqlDataMapper } from "../../sql/common/datamapper";
 
 export interface ITdsDataMapper<TDomainEntity>
   extends ISqlDataMapper<ColumnValue[], TDomainEntity> {}

@@ -1,11 +1,11 @@
 import { Readable } from "stronger-typed-streams";
 import { Request } from "tedious";
 
-import { ISqlQuery } from "../read/query";
-import { ISqlQueryHandler } from "../read/queryhandler";
-import { TdsConnectionPool } from "./tdsconnectionpool";
-import { ITdsDataMapper } from "./tdsdatamapper";
-import { EntityReadableStream } from "./utils";
+import { ISqlQuery } from "../../sql/read/query";
+import { ISqlQueryHandler } from "../../sql/read/queryhandler";
+import { TdsConnectionPool } from "../common/tdsconnectionpool";
+import { ITdsDataMapper } from "../common/tdsdatamapper";
+import { EntityReadableStream } from "../common/utils";
 
 export class TdsQueryHandler<TEntity> implements ISqlQueryHandler<TEntity> {
   protected connectionPool: TdsConnectionPool;
@@ -47,6 +47,7 @@ export class TdsQueryHandler<TEntity> implements ISqlQueryHandler<TEntity> {
             res();
           });
           req.on("row", (row) => rs.push(this.dataMapper.toDomain(row)));
+          // tslint:disable-next-line: no-empty
           req.on("error", () => {});
           conn.execSql(req);
         }),
