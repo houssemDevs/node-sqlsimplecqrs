@@ -32,11 +32,7 @@ export class SqlFilterCriteria implements ISqlFilterCriteria {
   public static in(filedName: string, value: string[]): ISqlFilterCriteria {
     return this.custom(filedName, `(${value.join(",")})`, "IN");
   }
-  public static custom(
-    filedName: string,
-    value: string,
-    operator: string,
-  ): ISqlFilterCriteria {
+  public static custom(filedName: string, value: string, operator: string): ISqlFilterCriteria {
     return new SqlFilterCriteria(`${filedName} ${operator} ${value}`);
   }
   private expression: string;

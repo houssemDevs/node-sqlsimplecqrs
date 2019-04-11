@@ -5,17 +5,9 @@ export interface ISqlQuery extends IQuery<string, ISqlFilterCriteria> {
   addSortCriteria(s: ISqlSortCriteria): void;
 }
 
-export class SqlSelectQuery extends Query<string, ISqlFilterCriteria>
-  implements ISqlQuery {
-  public static fromTableAndColumns(
-    tableName: string,
-    columns: string[],
-  ): SqlSelectQuery {
-    return new SqlSelectQuery(
-      ` SELECT ${
-        columns.length === 0 ? "" : columns.join(",")
-      } FROM ${tableName} `,
-    );
+export class SqlSelectQuery extends Query<string, ISqlFilterCriteria> implements ISqlQuery {
+  public static fromTableAndColumns(tableName: string, columns: string[]): SqlSelectQuery {
+    return new SqlSelectQuery(` SELECT ${columns.length === 0 ? "" : columns.join(",")} FROM ${tableName} `);
   }
   public static fromSelectStatment(selectStmt: string): SqlSelectQuery {
     return new SqlSelectQuery(selectStmt);
@@ -36,9 +28,7 @@ export class SqlSelectQuery extends Query<string, ISqlFilterCriteria>
     let sortByClause = "";
     this.criteriaGroups.forEach((grp) => {
       if (whereClause.length === 0) {
-        whereClause += ` WHERE (${grp
-          .map((c) => c.toExpression())
-          .join(" AND ")})`;
+        whereClause += ` WHERE (${grp.map((c) => c.toExpression()).join(" AND ")})`;
       } else {
         whereClause += ` OR (${grp.map((c) => c.toExpression()).join(" AND ")})`;
       }
